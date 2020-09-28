@@ -28,8 +28,7 @@ const todoReducer = (state = initState, action) => {
         error: action.payload,
       };
 
-    // ====== ADD TODO ======
-
+    // ADD TODO
     case TYPE.ADD_TODOS_REQUEST:
       return {
         ...state,
@@ -52,7 +51,7 @@ const todoReducer = (state = initState, action) => {
         error: action.payload,
       };
 
-    // DELETE TODO ======
+    // DELETE TODO
     case TYPE.DELETE_TODOS_REQUEST:
       return {
         ...state,
@@ -73,8 +72,7 @@ const todoReducer = (state = initState, action) => {
         error: action.payload,
       };
 
-    // TOGGLE
-    // DELETE TODO ======
+    // TOGGLE TODO
     case TYPE.TOGGLE_TODOS_REQUEST:
       return {
         ...state,
@@ -94,6 +92,27 @@ const todoReducer = (state = initState, action) => {
       };
 
     case TYPE.TOGGLE_TODOS_FAILURE:
+      return {
+        loading: false,
+        todos: [],
+        error: action.payload,
+      };
+
+    // UPDATE TODO
+    case TYPE.UPDATE_TODOS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case TYPE.UPDATE_TODOS_SUCCESS:
+      console.log(action.payload.updatedVal);
+      return {
+        loading: false,
+        todos: [...state.todos],
+        error: "",
+      };
+
+    case TYPE.UPDATE_TODOS_FAILURE:
       return {
         loading: false,
         todos: [],

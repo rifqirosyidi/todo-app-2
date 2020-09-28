@@ -1,7 +1,7 @@
 import * as TYPE from "./todoTypes";
 import axios from "axios";
-import shortid from "shortid";
 
+// Fetch Todo
 export const fetchTodosRequest = () => {
   return {
     type: TYPE.FETCH_TODOS_REQUEST,
@@ -37,7 +37,7 @@ export const fetchTodos = () => {
   };
 };
 
-// FETCH ADD DATA
+// Add Todo
 export const addTodoRequest = () => {
   return {
     type: TYPE.ADD_TODOS_REQUEST,
@@ -78,7 +78,7 @@ export const addTodo = (id, todo) => {
   };
 };
 
-// FETCH DELETE DATA
+// Delete Todo
 export const deleteTodoRequest = () => {
   return {
     type: TYPE.DELETE_TODOS_REQUEST,
@@ -116,7 +116,7 @@ export const deleteTodo = (id) => {
   };
 };
 
-// FETCH TOGGLE DATA
+// Toggle Todo
 export const toggleTodoRequest = () => {
   return {
     type: TYPE.TOGGLE_TODOS_REQUEST,
@@ -151,6 +151,45 @@ export const toggleTodo = (id, complete) => {
 
       .catch((error) => {
         dispatch(toggleTodoFailure(error.message));
+      });
+  };
+};
+
+// Update Todo
+export const updateTodoRequest = () => {
+  return {
+    type: TYPE.UPDATE_TODOS_REQUEST,
+  };
+};
+
+export const updateTodoSuccess = (id, updatedVal) => {
+  return {
+    type: TYPE.UPDATE_TODOS_SUCCESS,
+    payload: { id, updatedVal },
+  };
+};
+
+export const updateTodoFailure = (error) => {
+  return {
+    type: TYPE.UPDATE_TODOS_FAILURE,
+    payload: error,
+  };
+};
+
+export const updateTodo = (id, updatedVal) => {
+  return function (dispatch) {
+    dispatch(updateTodoRequest());
+    axios
+      .put(`http://localhost:8000/api/todo/${id}/text`, {
+        todo: updatedVal,
+      })
+
+      .then((response) => {
+        dispatch(updateTodoSuccess(id, updatedVal));
+      })
+
+      .catch((error) => {
+        dispatch(updateTodoFailure(error.message));
       });
   };
 };

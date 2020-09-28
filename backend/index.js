@@ -34,7 +34,11 @@ app.get("/api/todos/", (req, res) => {
     if (error) {
       throw error;
     }
-    return res.send({ error: false, data: results, message: "list of todos" });
+    return res.send({
+      error: false,
+      data: results,
+      message: "SHOW ALL TODO",
+    });
   });
 });
 
@@ -47,10 +51,9 @@ app.get("/api/todo/:id", (req, res) => {
       throw error;
     }
     return res.send({
-      status: 200,
       error: false,
       data: results,
-      message: "todo",
+      message: "SHOW TODO",
     });
   });
 });
@@ -64,31 +67,49 @@ app.post("/api/todos", (req, res) => {
   let sqlQuery = "INSERT INTO todos SET ?";
   dbConnect.query(sqlQuery, { id: id, todo: todo }, (error, results) => {
     if (error) console.error(error);
-    res.send({ status: 200, error: false, data: results, message: "add todo" });
+    res.send({
+      error: false,
+      data: results,
+      message: "TODO CREATED",
+    });
   });
 });
 
-// Update Text For Todo Below Here (still progress)
-app.put("/api/todos/:id/text", (req, res) => {
-  // Test
+// Update Todo Text
+app.put("/api/todo/:id/text", (req, res) => {
+  let updatedVal = req.body.todo;
+  let id = req.params.id;
+  console.log(updatedVal);
+  console.log(id);
+  let sqlQuery = "UPDATE todos SET todo = ? WHERE id = ?";
+  dbConnect.query(sqlQuery, [updatedVal, id], (err, results) => {
+    if (err) {
+      throw err;
+    }
+    res.send({
+      error: false,
+      data: results,
+      message: "TODO CONTENT UPDATED",
+    });
+  });
+
   console.log(req.params.id);
 });
 
 // Update / Toggle Complete Status
 app.put("/api/todo/:id/status", (req, res) => {
   let initialStatus = req.body.complete;
+  initialStatus == 0 ? (status = 1) : (status = 0);
   let id = req.params.id;
   let sqlQuery = "UPDATE todos SET complete = ? WHERE id = ?";
-  console.log(req.body.complete);
   dbConnect.query(sqlQuery, [status, id], (err, results) => {
     if (err) {
       throw err;
     }
     res.send({
-      status: 200,
       error: false,
       data: results,
-      message: "update complete",
+      message: "TODO STATUS UPDATED",
     });
   });
 });
@@ -97,14 +118,12 @@ app.put("/api/todo/:id/status", (req, res) => {
 app.delete("/api/todos/:id", (req, res) => {
   let id = req.params.id;
   let sqlQuery = "DELETE FROM todos WHERE id = ?";
-  console.log(sqlQuery);
   dbConnect.query(sqlQuery, id, (err, results) => {
     if (err) throw err;
     res.send({
-      status: 200,
       error: false,
       data: results,
-      message: "deleted todo",
+      message: "TODO DELETED",
     });
   });
 });

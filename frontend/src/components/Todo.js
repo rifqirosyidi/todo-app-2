@@ -1,17 +1,32 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { fetchTodos, deleteTodo, toggleTodo } from "../redux/todos/todoActions";
+import {
+  fetchTodos,
+  deleteTodo,
+  toggleTodo,
+  updateTodo,
+} from "../redux/todos/todoActions";
 import EditText from "react-editext";
 import { Redirect } from "react-router-dom";
 
-const Todo = ({ listTodos, fetchTodos, deleteTodo, toggleTodo }) => {
+const Todo = ({
+  listTodos,
+  fetchTodos,
+  deleteTodo,
+  toggleTodo,
+  updateTodo,
+}) => {
   useEffect(() => {
     fetchTodos();
   }, []);
 
-  const handleSave = () => {
-    console.log("Edited Value -> ");
-    // EDIT SAVE
+  const handleSave = (updatedValue, id) => {
+    listTodos.map((todo) => {
+      if (todo.id === id) {
+        console.log("EDITED: " + id);
+        updateTodo(id, updatedValue);
+      }
+    });
   };
 
   const handleToggleTodo = (id, complete) => {
@@ -55,7 +70,7 @@ const Todo = ({ listTodos, fetchTodos, deleteTodo, toggleTodo }) => {
                 cancelButtonClassName="bg-red-500 mx-1 hover:bg-red-700 text-white font-bold py-2 px-2"
                 type="text"
                 value={todo.todo}
-                onSave={handleSave}
+                onSave={(updatedValue) => handleSave(updatedValue, todo.id)}
               />
             </div>
             <div className="w-full md:w-2/6 px- md:mb-0">
@@ -90,6 +105,7 @@ const mapDispatchToProps = (dispatch) => {
     fetchTodos: () => dispatch(fetchTodos()),
     deleteTodo: (id) => dispatch(deleteTodo(id)),
     toggleTodo: (id, complete) => dispatch(toggleTodo(id, complete)),
+    updateTodo: (id, updatedVal) => dispatch(updateTodo(id, updatedVal)),
   };
 };
 

@@ -79,8 +79,6 @@ app.post("/api/todos", (req, res) => {
 app.put("/api/todo/:id/text", (req, res) => {
   let updatedVal = req.body.todo;
   let id = req.params.id;
-  console.log(updatedVal);
-  console.log(id);
   let sqlQuery = "UPDATE todos SET todo = ? WHERE id = ?";
   dbConnect.query(sqlQuery, [updatedVal, id], (err, results) => {
     if (err) {

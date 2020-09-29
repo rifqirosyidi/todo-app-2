@@ -9,6 +9,7 @@ import {
 import EditText from "react-editext";
 import { Redirect } from "react-router-dom";
 
+// Destructuring Props
 const Todo = ({
   listTodos,
   fetchTodos,
@@ -52,6 +53,7 @@ const Todo = ({
                 textDecoration: todo.complete ? "line-through" : "",
               }}
             >
+              {/* Edit Adn View Mode */}
               <EditText
                 submitOnEnter
                 buttonsAlign="before"

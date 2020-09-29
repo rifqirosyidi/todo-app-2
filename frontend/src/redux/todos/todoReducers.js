@@ -1,5 +1,4 @@
 import * as TYPE from "./todoTypes";
-import shortid from "shortid";
 
 const initState = {
   loading: false,
@@ -7,6 +6,7 @@ const initState = {
   error: "",
 };
 
+// Reducer for todo app
 const todoReducer = (state = initState, action) => {
   switch (action.type) {
     case TYPE.FETCH_TODOS_REQUEST:

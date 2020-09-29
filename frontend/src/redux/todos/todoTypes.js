@@ -18,7 +18,7 @@ export const TOGGLE_TODOS_REQUEST = "TOGGLE_TODOS_REQUEST";
 export const TOGGLE_TODOS_SUCCESS = "TOGGLE_TODOS_SUCCESS";
 export const TOGGLE_TODOS_FAILURE = "TOGGLE_TODOS_FAILURE";
 
-export const ADD_TODO = "ADD_TODO";
-export const EDIT_TODO = "EDIT_TODO";
-export const DELETE_TODO = "DELETE_TODO";
-export const TOGGLE_TODO_STATUS = "TOGGLE_TODO_STATUS";
+// export const ADD_TODO = "ADD_TODO";
+// export const EDIT_TODO = "EDIT_TODO";
+// export const DELETE_TODO = "DELETE_TODO";
+// export const TOGGLE_TODO_STATUS = "TOGGLE_TODO_STATUS";
